@@ -2,7 +2,7 @@
         margin: 0;
         padding: 0;
         height: 100%;
-      }</style><link href=/static/css/app.d4a5512e540dcd66609d42db8b944307.css rel=stylesheet></head><body><noscript>请检查浏览器设置是否支持JavaScript</noscript><div id=app></div><script>/* eslint-env worker, serviceworker */
+      }</style><link href=./static/css/app.d4a5512e540dcd66609d42db8b944307.css rel=stylesheet></head><body><noscript>请检查浏览器设置是否支持JavaScript</noscript><div id=app></div><script>/* eslint-env worker, serviceworker */
 'use strict'
 
 const isLocalhost = Boolean(
@@ -50,7 +50,7 @@ self.addEventListener('load', function () {
   if ('serviceWorker' in navigator &&
       (self.location.protocol === 'https:' ||
       isLocalhost)) {
-    navigator.serviceWorker.register('service-worker.js')
+    navigator.serviceWorker.register('./service-worker.js')
       .then(function (registration) {
         console.log('service worker已注册.', registration)
         if (self.PushManager) {
@@ -69,4 +69,4 @@ self.addEventListener('load', function () {
         console.error('注册service worker期间出现错误:', e)
       })
   }
-})</script><script type=text/javascript src=/static/js/manifest.486fc7e9989084e92003.js></script><script type=text/javascript src=/static/js/vendor.15330173c4e225669144.js></script><script type=text/javascript src=/static/js/app.4fa8256c2beb2207f8f7.js></script></body></html>
+})</script><script type=text/javascript src=./static/js/manifest.486fc7e9989084e92003.js></script><script type=text/javascript src=./static/js/vendor.15330173c4e225669144.js></script><script type=text/javascript src=./static/js/app.4fa8256c2beb2207f8f7.js></script></body></html>
