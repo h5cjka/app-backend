@@ -1,0 +1,72 @@
+<!DOCTYPE html><html><head><title>委贷审批后台</title><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="ie=edge"><link rel=icon type=image/jpg href=/static/logo.jpg><link rel=manifest href=/static/manifest.json><meta name=theme-color content=#00cbcd><style>html, body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+      }</style><link href=/static/css/app.d4a5512e540dcd66609d42db8b944307.css rel=stylesheet></head><body><noscript>请检查浏览器设置是否支持JavaScript</noscript><div id=app></div><script>/* eslint-env worker, serviceworker */
+'use strict'
+
+const isLocalhost = Boolean(
+    // IPv4 本地地址
+    self.location.hostname === 'localhost' ||
+    self.location.hostname.match(
+      /^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/
+    ) ||
+    // IPv6 本地地址
+    self.location.hostname === '[::1]'
+  )
+
+function urlB64ToUint8Array (base64String) {
+  const padding = '='.repeat((4 - base64String.length % 4) % 4)
+  const base64 = (base64String + padding)
+  .replace(/\-/g, '+')
+  .replace(/_/g, '/')
+
+  const rawData = self.atob(base64)
+  const outputArray = new Uint8Array(rawData.length)
+
+  for (let i = 0; i < rawData.length; ++i) {
+    outputArray[i] = rawData.charCodeAt(i)
+  }
+  return outputArray
+}
+
+function subscribeUser (swRegistration) {
+  // return
+  const applicationServerPublicKey = 'BMhZ04tI0F-JTQHcNOH__P-H_j43zvWyFRuNXyoxV6ymE5VXT0s9VRdoKykCvdEMy0UTdKtX_Cye3wpFIMZDznQ'
+  const applicationServerKey = urlB64ToUint8Array(applicationServerPublicKey)
+
+  swRegistration.pushManager.subscribe({
+    userVisibleOnly: true,
+    applicationServerKey
+  })
+  .then(function (subscription) {
+    console.log(JSON.stringify(subscription))
+  })
+  .catch()
+}
+
+// 加载时注册
+self.addEventListener('load', function () {
+  if ('serviceWorker' in navigator &&
+      (self.location.protocol === 'https:' ||
+      isLocalhost)) {
+    navigator.serviceWorker.register('service-worker.js')
+      .then(function (registration) {
+        console.log('service worker已注册.', registration)
+        if (self.PushManager) {
+          registration.pushManager.getSubscription()
+            .then(function (subscription) {
+              // 订阅
+              if (!subscription) {
+                subscribeUser(registration)
+              } else {
+                console.log('你已经订阅.')
+              }
+            })
+        }
+      })
+      .catch(function (e) {
+        console.error('注册service worker期间出现错误:', e)
+      })
+  }
+})</script><script type=text/javascript src=/static/js/manifest.486fc7e9989084e92003.js></script><script type=text/javascript src=/static/js/vendor.15330173c4e225669144.js></script><script type=text/javascript src=/static/js/app.4fa8256c2beb2207f8f7.js></script></body></html>
